@@ -17,7 +17,7 @@ Design:
 
 The relation schema of database showed as follows:
 
-![image-20220417022254977](schema.jpg)
+![image-20220417022254977](schema.png)
 
 Constraints:
 
@@ -31,7 +31,27 @@ Constraints:
 
 ## (b)
 
-Relational Database System: MySQL 8.0
+Environment:
+
+```mysql
+mysql> show variables like '%storage_engine%';
++---------------------------------+-----------+
+| Variable_name                   | Value     |
++---------------------------------+-----------+
+| default_storage_engine          | InnoDB    |
+| default_tmp_storage_engine      | InnoDB    |
+| disabled_storage_engines        |           |
+| internal_tmp_mem_storage_engine | TempTable |
++---------------------------------+-----------+
+
+mysql> select version();
++-----------+
+| version() |
++-----------+
+| 8.0.23    |
++-----------+
+```
+
 
 The SQL for create the database schema can be found at:
 
