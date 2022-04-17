@@ -2,7 +2,7 @@
 
 The ER diagram can be represented as follows
 
-![ER](/Users/hansen/Desktop/Database-Final/ER.png)
+![ER](ER.png)
 
 Design:
 
@@ -17,7 +17,7 @@ Design:
 
 The relation schema of database showed as follows:
 
-![image-20220417022254977](/Users/hansen/Library/Application Support/typora-user-images/image-20220417022254977.png)
+![image-20220417022254977](schema.jpg)
 
 Constraints:
 
