@@ -1,12 +1,10 @@
-[toc]
-
 ## Introduction
 
 We report on the design and implementation of the relational database system of our question answering service. To use this  service, user required to sign up with their username, email and pasword. They can also have their profile, city, state, country, level information included. 
 
 After signing up, user can post their question. Each question should specify one topic it belongs apart from title and body. There are some predefined topics stored in multi-level hierarchy. Each topic may have one parent topic. For example, Database is a sub-topic of Computer Science. 
 
-Besides, user can also post answers to other questions. They may answer the same question for multiple times. They may also answer their own question for following up. We also record the likes of each answer, user can only like the answer for once. The questioner can mark the question whether it is solved or selecting the best answer according to the number of likes.
+Besides, user can also post answers to other questions. They may answer the same question for multiple times. We also record the likes of each answer, user can only like the answer for once. The questioner can mark the question whether it is solved or selecting the best answer according to the number of likes.
 
 In order to encourage the user to get involved and make the forum more active. There are three kinds of level (basic, advanced, expert) telling the status of each user. The new user is in the basic level. The criteriums for the different levels is based on the number of answers user posted.
 
@@ -27,7 +25,7 @@ Design:
 3. User can only like each answer for one time
 4. Each answer answers one question 
 5. Each question belongs to one topic
-6. Each topic can only have one parent topic
+6. Each topic may have one direct parent topic
 
 
 
@@ -47,11 +45,9 @@ Assumptions:
 
 1. There are multi-level(equal to or more than 2) hierachies of topics.
 2. The level of each user will not be updated immediately after he/she posts a new answer.
-2. User can post multiple answers to the same question.
-2. Each question can be provided with only one topic when posted.
-2. Each topic may have only one direct parent topic.
-2. User may post answer to their own question. 
-2. User should only like the answer for one time.
+3. User can post multiple answers to the same question.
+4. Each question can be provided with one topic when posted.
+5. Each topic may have one direct parent topic.
 
 
 
@@ -59,7 +55,7 @@ Assumptions:
 
 Environment:
 
-```mysql
+```sql
 mysql> show variables like '%storage_engine%';
 +---------------------------------+-----------+
 | Variable_name                   | Value     |
@@ -167,7 +163,7 @@ SET FOREIGN_KEY_CHECKS = 1;
 
 #### (1)
 
-```mysql
+```sql
 -- q1
 insert into User (username, email, password, city, state, country, profile)
 values ("Jaccob James", "corinna8@euneeedn.com", '123456', 'New York City', "NY",
@@ -176,7 +172,7 @@ values ("Jaccob James", "corinna8@euneeedn.com", '123456', 'New York City', "NY"
 
 #### (2)
 
-```mysql
+```sql
 -- 2) insert the question
 insert into Questions(uid, topic_id, date, title, ques_body)
 values (1, 5, NOW(), 'Shift 2D Grid', 
@@ -187,7 +183,7 @@ values (1, 5, NOW(), 'Shift 2D Grid',
 
 Justification: 
 
-```mysql
+```sql
 update `User` u
 left join (
 select uid, count(a.ans_id) as answer_cnt
@@ -203,7 +199,7 @@ set u.level = CASE
 
 #### (4)
 
-```mysql
+```sql
 -- suppose we want to get all the answers of question 3
 select q.ques_id, a.ans_id, a.ans_body, a.date, a.isBest
 from Questions q
@@ -216,7 +212,7 @@ order by a.date;
 
 Jusitication:  For both upper and lower level hierarchy topics, we calculate the number of questions and answers. For upper level one, we use recursive query to get all the lower level topics under it. The temprary relation `topic_group` records each topic and all the topics under it. Also, we have to add itself into this relation. Then use join and group by to calculate the number of questions under each topic.
 
-```mysql
+```sql
 with recursive topic_group(tid, sub_tid) as (
     select parent_id, topic_id
     from Topic
@@ -239,7 +235,7 @@ group by total.tid;
 
 Jusitication: We utilize [fulltext search](https://dev.mysql.com/doc/refman/8.0/en/fulltext-boolean.html) for this question. Its relevance ranking is based on the BM25 and TF-IDF. Besides, we add different weights to title, question body and answers to better reflect the relevance. We believe the questions' scores are more important than those of answers. The coefficients are 5.0, 3.0 and 1.0 respectively.
 
-```mysql
+```sql
 select q.ques_id, q.title, sum(score) as score_sum
 from (
     select ques_id, 5.0 * MATCH(title)
@@ -263,6 +259,8 @@ join Questions q on q.ques_id = tmp.ques_id
 group by tmp.ques_id
 order by score_sum desc;
 ```
+
+
 
 
 
