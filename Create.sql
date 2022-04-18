@@ -40,6 +40,8 @@ CREATE TABLE `Questions` (
   `title` varchar(255) NOT NULL,
   `ques_body` text NOT NULL,
   `isSolved` tinyint(1) DEFAULT 0,
+  fulltext search_idx_t(title),
+  fulltext search_idx_b(ques_body),
   CONSTRAINT `topic_id` FOREIGN KEY (`topic_id`) REFERENCES `Topic` (`topic_id`),
   CONSTRAINT `uid_ques` FOREIGN KEY (`uid`) REFERENCES `User` (`uid`)
 );
@@ -55,6 +57,7 @@ CREATE TABLE `Answers` (
   `ans_body` text NOT NULL,
   `thumb_ups` int DEFAULT 0,
   `isBest` tinyint(1) DEFAULT 0,
+  fulltext search_idx_a(ans_body),
   CONSTRAINT `ques_id` FOREIGN KEY (`ques_id`) REFERENCES `Questions` (`ques_id`),
   CONSTRAINT `uid_ans` FOREIGN KEY (`uid`) REFERENCES `User` (`uid`) 
 );
