@@ -181,19 +181,19 @@ order by score_sum desc;
 
 ##### (1)
 
-![image-20220417191216811](/Users/xiuwenli/Document/nyu/2022Spring/database/Proj1/CSGY_6083_Database/README.assets/image-20220417191216811.png)
+![image-20220417191216811](README.assets/image-20220417191216811.png)
 
 ##### (2)
 
-![image-20220417193629923](/Users/xiuwenli/Document/nyu/2022Spring/database/Proj1/CSGY_6083_Database/README.assets/image-20220417193629923.png)
+![image-20220417193629923](README.assets/image-20220417193629923.png)
 
 ##### (3)
 
-![image-20220417192827261](/Users/xiuwenli/Document/nyu/2022Spring/database/Proj1/CSGY_6083_Database/README.assets/image-20220417192827261.png)
+![image-20220417192827261](README.assets/image-20220417192827261.png)
 
 Clarification: As the result shows, Jaccob James is still basic user because he answered zero question, while Alice Walker and Wade Cole have been updated to adanced and expert respectively because they have answered 5 and 3 questions.
 
-<img src="/Users/xiuwenli/Document/nyu/2022Spring/database/Proj1/CSGY_6083_Database/README.assets/image-20220417193909275.png" alt="image-20220417193909275" style="zoom:67%;" />
+<img src="README.assets/image-20220417193909275.png" alt="image-20220417193909275" style="zoom:67%;" />
 
 <figure>
   <figcaption align="center"><b>User-Answers Relation</b></figcaption>
@@ -201,7 +201,7 @@ Clarification: As the result shows, Jaccob James is still basic user because he 
 
 ##### (4)
 
-![image-20220417194908033](/Users/xiuwenli/Document/nyu/2022Spring/database/Proj1/CSGY_6083_Database/README.assets/image-20220417194908033.png)
+![image-20220417194908033](README.assets/image-20220417194908033.png)
 
 <figure>
   <figcaption align="center"><b>Result 4</b></figcaption>
@@ -209,7 +209,7 @@ Clarification: As the result shows, Jaccob James is still basic user because he 
 
 Clarification: Suppose given question id 3, we could get three answers. We can check the results by the orignal table Answers.
 
-<img src="/Users/xiuwenli/Document/nyu/2022Spring/database/Proj1/CSGY_6083_Database/README.assets/image-20220417192503003.png" alt="image-20220417192503003" style="zoom:67%;" />
+<img src="README.assets/image-20220417192503003.png" alt="image-20220417192503003" style="zoom:67%;" />
 
 <figure>
   <figcaption align="center"><b>Answers Rows</b></figcaption>
@@ -217,7 +217,7 @@ Clarification: Suppose given question id 3, we could get three answers. We can c
 
 ##### (5)
 
-![image-20220417200151982](/Users/xiuwenli/Document/nyu/2022Spring/database/Proj1/CSGY_6083_Database/README.assets/image-20220417200151982.png)
+![image-20220417200151982](README.assets/image-20220417200151982.png)
 
 <figure>
   <figcaption align="center"><b>Result 5</b></figcaption>
@@ -225,19 +225,17 @@ Clarification: Suppose given question id 3, we could get three answers. We can c
 
 Clarification: We can illustrate the results by hand. For example, topic `Computer Science`(topic_id 1) has topic `Algorithms`(5) and `Database`(4) under it. Also, `Database` has `NoSQL`(6) under it. Therefore, CS should sum up all the questions and answers under those sub-topics. Let's look at questions number. It equals to 4 + 1 + 1 = 6. So the solution is correct. Plus, this solution will not miss topic with zero question or answer as it uses left join.
 
-<img src="/Users/xiuwenli/Document/nyu/2022Spring/database/Proj1/CSGY_6083_Database/README.assets/image-20220417191800741.png" alt="image-20220417191800741" style="zoom:67%;" />
+<img src="README.assets/image-20220417191800741.png" alt="image-20220417191800741" style="zoom:67%;" />
 
 <figure>
   <figcaption align="center"><b>Topics</b></figcaption>
 </figure>
-
-<img src="/Users/xiuwenli/Document/nyu/2022Spring/database/Proj1/CSGY_6083_Database/README.assets/image-20220417203907277.png" alt="image-20220417203907277" style="zoom:67%;" />
+<img src="README.assets/image-20220417203907277.png" alt="image-20220417203907277" style="zoom:67%;" />
 
 <figure>
   <figcaption align="center"><b>QuestionID-TopicID</b></figcaption>
 </figure>
-
-<img src="/Users/xiuwenli/Document/nyu/2022Spring/database/Proj1/CSGY_6083_Database/README.assets/image-20220417203755757.png" alt="image-20220417203755757" style="zoom:67%;" />
+<img src="README.assets/image-20220417203755757.png" alt="image-20220417203755757" style="zoom:67%;" />
 
 <figure>
   <figcaption align="center"><b>AnswerID-TopicID</b></figcaption>
@@ -245,7 +243,7 @@ Clarification: We can illustrate the results by hand. For example, topic `Comput
 
 ##### (6)
 
-![image-20220417202041499](/Users/xiuwenli/Document/nyu/2022Spring/database/Proj1/CSGY_6083_Database/README.assets/image-20220417202041499.png)
+![image-20220417202041499](README.assets/image-20220417202041499.png)
 
 <figure>
   <figcaption align="center"><b>Result 6</b></figcaption>
@@ -255,21 +253,20 @@ Clarification: Question 2 gets the highest score because it contains both of the
 
 
 
-![image-20220417191832444](/Users/xiuwenli/Document/nyu/2022Spring/database/Proj1/CSGY_6083_Database/README.assets/image-20220417191832444.png)
+![image-20220417191832444](README.assets/image-20220417191832444.png)
 
 <figure>
   <figcaption align="center"><b>Question Title</b></figcaption>
 </figure>
 
-![image-20220417191932293](/Users/xiuwenli/Document/nyu/2022Spring/database/Proj1/CSGY_6083_Database/README.assets/image-20220417191932293.png)
+![image-20220417191932293](README.assets/image-20220417191932293.png)
 
 <figure>
   <figcaption align="center"><b>Question Body</b></figcaption>
 </figure>
 
-![image-20220417200233798](/Users/xiuwenli/Document/nyu/2022Spring/database/Proj1/CSGY_6083_Database/README.assets/image-20220417200233798.png)
+![image-20220417200233798](README.assets/image-20220417200233798.png)
 
 <figure>
   <figcaption align="center"><b>Answers Body</b></figcaption>
 </figure>
-
