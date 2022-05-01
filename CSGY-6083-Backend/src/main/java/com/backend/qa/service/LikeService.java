@@ -12,11 +12,11 @@ public class LikeService {
     @Autowired
     public LikeDao likeDao;
 
-    public Like getLikeByUid(int id){
+    public ArrayList<Like> getLikeByUid(int id){
         return likeDao.getLikeByUid(id);
     }
 
-    public Like getLikeByAnsId(int id) {
+    public ArrayList<Like> getLikeByAnsId(int id) {
         return likeDao.getLikeByAnsId(id);
     }
 

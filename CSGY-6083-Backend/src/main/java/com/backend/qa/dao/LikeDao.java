@@ -10,10 +10,10 @@ import java.util.ArrayList;
 @Mapper
 public interface LikeDao {
     @Select("select * from `Like` where uid = #{id}")
-    public Like getLikeByUid(@Param("id") int id);
+    public ArrayList<Like> getLikeByUid(@Param("id") int id);
 
     @Select("select * from `Like` where ans_id = #{id}")
-    public Like getLikeByAnsId(@Param("id") int id);
+    public ArrayList<Like>  getLikeByAnsId(@Param("id") int id);
 
     @Select("select * from `Like`")
     public ArrayList<Like> getAllLikes();

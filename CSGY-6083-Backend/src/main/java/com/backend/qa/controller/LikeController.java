@@ -33,31 +33,33 @@ public class LikeController {
         return result;
     }
 
-    @ApiOperation("Get Like By Uid")
+    @ApiOperation("Get All Likes By Uid")
     @GetMapping(value = "/likes/uid/{id}")
     @ResponseBody
-    public CustomResponse<Like> getLikeByUid(@PathVariable("id") int id){
-        CustomResponse<Like> result = CustomResponse.build();
-        Like like = likeService.getLikeByUid(id);
-        if(like == null){
+    public CustomResponse<ArrayList<Like>> getLikeByUid(@PathVariable("id") int id){
+        ArrayList<Like> likes = new ArrayList<Like>();
+        CustomResponse<ArrayList<Like>> result = CustomResponse.build();
+        likes = likeService.getLikeByUid(id);
+        if(likes == null){
             result.withError(CustomResponseStatus.NOT_FOUND.getCode(), CustomResponseStatus.NOT_FOUND.getMessage());
             return result;
         }
-        result.setData(like);
+        result.setData(likes);
         return result;
     }
 
-    @ApiOperation("Get Like By Ans Id")
+    @ApiOperation("Get All Likes By Ans Id")
     @GetMapping(value = "/likes/ans/{id}")
     @ResponseBody
-    public CustomResponse<Like> getLikeByAnsId(@PathVariable("id") int id){
-        CustomResponse<Like> result = CustomResponse.build();
-        Like like = likeService.getLikeByAnsId(id);
-        if(like == null){
+    public CustomResponse<ArrayList<Like>> getLikeByAnsId(@PathVariable("id") int id){
+        ArrayList<Like> likes = new ArrayList<Like>();
+        CustomResponse<ArrayList<Like>> result = CustomResponse.build();
+        likes = likeService.getLikeByAnsId(id);
+        if(likes == null){
             result.withError(CustomResponseStatus.NOT_FOUND.getCode(), CustomResponseStatus.NOT_FOUND.getMessage());
             return result;
         }
-        result.setData(like);
+        result.setData(likes);
         return result;
     }
 }
