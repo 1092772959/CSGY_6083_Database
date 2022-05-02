@@ -11,11 +11,8 @@ public interface QuestionsDao {
     @Select("select * from Questions where ques_id = #{id}")
     Questions getQuestionById(@Param("id") int id);
 
-    @Select("select * from Questions order by date desc")
+    @Select("select * from Questions where isSolved = 0 order by date desc")
     ArrayList<Questions> getAllQuestions();
-
-    @Select("select * from Questions where uid = #{uid} order by date desc")
-    ArrayList<Questions> getAllQuestionsByUid(@Param("uid") int uid);
 
     @Select("select * from Questions where topic_id = #{topic_id} order by date desc")
     ArrayList<Questions> getAllQuestionsByTopicId(@Param("topic_id") int topic_id);
@@ -28,4 +25,7 @@ public interface QuestionsDao {
 
     @Update("update Questions set isSolved = #{isSolved} where ques_id = #{id}")
     int updateSolved(@Param("id") int uid, @Param("id") boolean isSolved);
+
+    @Select("select * from Questions inner join User on User.uid = Questions.uid and username = #{username} order by date desc")
+    ArrayList<Questions> getAllQuestionsByUsername(@Param("username") String username);
 }

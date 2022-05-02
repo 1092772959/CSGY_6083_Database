@@ -2,6 +2,7 @@ package com.backend.qa.controller;
 
 import com.backend.qa.common.CustomResponse;
 import com.backend.qa.common.CustomResponseStatus;
+import com.backend.qa.config.AccessLimit;
 import com.backend.qa.domain.Answers;
 import com.backend.qa.service.AnswersService;
 import io.swagger.annotations.Api;
@@ -17,6 +18,22 @@ public class AnswersController {
 
     @Autowired
     private AnswersService answersService;
+
+    @ApiOperation("Get All Answers Posted By User")
+    @AccessLimit(needLogin = true)
+    @GetMapping(value = "/answers/user")
+    @ResponseBody
+    public CustomResponse<ArrayList<Answers>> getAnswersByUsername(String username){
+        ArrayList<Answers> answers = new ArrayList<Answers>();
+        CustomResponse<ArrayList<Answers>> result = CustomResponse.build();
+        answers = answersService.getAnswersByUsername(username);
+        if(answers == null){
+            result.withError(CustomResponseStatus.NOT_FOUND.getCode(), CustomResponseStatus.NOT_FOUND.getMessage());
+            return result;
+        }
+        result.setData(answers);
+        return result;
+    }
 
     @ApiOperation("Get All Answers")
     @GetMapping(value = "/answers")

@@ -12,15 +12,15 @@ public class LikeService {
     @Autowired
     public LikeDao likeDao;
 
-    public ArrayList<Like> getLikeByUid(int id){
-        return likeDao.getLikeByUid(id);
-    }
-
-    public ArrayList<Like> getLikeByAnsId(int id) {
+    public ArrayList<Like> getLikeByAnsId(int id){
         return likeDao.getLikeByAnsId(id);
     }
 
     public ArrayList<Like> getAllLikes() {
         return likeDao.getAllLikes();
+    }
+
+    public ArrayList<Like> getLikeByUsername(String username) {
+        return likeDao.getAllLikesByUsername(username);
     }
 }

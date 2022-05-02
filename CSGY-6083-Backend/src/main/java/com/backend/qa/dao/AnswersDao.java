@@ -14,8 +14,8 @@ public interface AnswersDao {
     @Select("select * from Answers order by date desc")
     ArrayList<Answers> getAllAnswers();
 
-    @Select("select * from Answers where uid = #{uid} order by thumb_ups desc, date desc")
-    ArrayList<Answers> getAllAnswersByUid(@Param("uid") int uid);
+    @Select("select * from Answers inner join User on User.uid = Answers.uid and username = #{username} order by thumb_ups desc, date desc")
+    ArrayList<Answers> getAnswersByUsername(@Param("username") String username);
 
     @Select("select * from Answers where ques_id = #{id} order by thumb_ups desc, date desc")
     ArrayList<Answers> getAllAnswersByQuesId(@Param("id") int id);
@@ -27,6 +27,6 @@ public interface AnswersDao {
     int updateThumb(@Param("id") int id, @Param("thumb_ups") int thumb_ups);
 
     @Update("update Answers set isBest = #{isBest} where ans_id = #{id}")
-    int updateThumb(@Param("id") int id, @Param("isBest") boolean isBest);
+    int updateBest(@Param("id") int id, @Param("isBest") boolean isBest);
 
 }

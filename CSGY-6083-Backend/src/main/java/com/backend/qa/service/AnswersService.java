@@ -19,4 +19,8 @@ public class AnswersService {
     public ArrayList<Answers> getAllAnswers() {
         return answersDao.getAllAnswers();
     }
+
+    public ArrayList<Answers> getAnswersByUsername(String username) {
+        return answersDao.getAnswersByUsername(username);
+    }
 }

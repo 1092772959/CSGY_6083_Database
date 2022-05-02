@@ -15,7 +15,10 @@ import java.util.UUID;
 @Service
 public class UserService {
     @Autowired
-    public UserDao userDao;
+    private UserDao userDao;
+
+    @Autowired
+    private SessionManager sessionManager;
 
     public User getByuid(int uid){
         return userDao.getByUid(uid);
@@ -48,6 +51,7 @@ public class UserService {
             cookie.setHttpOnly(true);
             cookie.setMaxAge(1000); // in seconds
             response.addCookie(cookie);
+            sessionManager.set(token, username);
         }catch (Exception e){
             System.out.println(e.getMessage());
             return false;
@@ -69,6 +73,7 @@ public class UserService {
         cookie.setHttpOnly(true);
         cookie.setMaxAge(1000); // in seconds
         response.addCookie(cookie);
+        sessionManager.set(token, username);
         return true;
     }
 
@@ -91,6 +96,7 @@ public class UserService {
         cookie.setHttpOnly(true);
         cookie.setMaxAge(0);
         response.addCookie(cookie);
+        sessionManager.delete(cookieToken != null ? cookieToken:paramToken);
         return true;
     }
 }

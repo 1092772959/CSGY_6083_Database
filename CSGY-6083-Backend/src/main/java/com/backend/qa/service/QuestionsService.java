@@ -19,4 +19,9 @@ public class QuestionsService {
     public ArrayList<Questions> getAllQuestions() {
         return questionsDao.getAllQuestions();
     }
+
+    public ArrayList<Questions> getAllQuestionsByUsername(String username) {
+        return questionsDao.getAllQuestionsByUsername(username);
+    }
+
 }

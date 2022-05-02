@@ -66,7 +66,7 @@ public class UserController {
     @ApiOperation("Login")
     @PostMapping(value = "/users/login")
     @ResponseBody
-    public CustomResponse<Boolean> login(HttpServletResponse response, @RequestParam("username") String username,
+    public CustomResponse<Boolean> login(HttpServletResponse response, HttpServletRequest request, @RequestParam("username") String username,
                                          @RequestParam("password") String password){
         CustomResponse<Boolean> result = CustomResponse.build();
         if(!userService.login(response, username, password)){

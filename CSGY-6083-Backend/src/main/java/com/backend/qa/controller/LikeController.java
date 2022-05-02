@@ -2,6 +2,7 @@ package com.backend.qa.controller;
 
 import com.backend.qa.common.CustomResponse;
 import com.backend.qa.common.CustomResponseStatus;
+import com.backend.qa.config.AccessLimit;
 import com.backend.qa.domain.Like;
 import com.backend.qa.service.LikeService;
 import io.swagger.annotations.Api;
@@ -33,13 +34,14 @@ public class LikeController {
         return result;
     }
 
-    @ApiOperation("Get All Likes By Uid")
-    @GetMapping(value = "/likes/uid/{id}")
+    @ApiOperation("Get All Likes Liked By User")
+    @AccessLimit(needLogin = true)
+    @GetMapping(value = "/likes/user")
     @ResponseBody
-    public CustomResponse<ArrayList<Like>> getLikeByUid(@PathVariable("id") int id){
+    public CustomResponse<ArrayList<Like>> getLikeByUsername(String username){
         ArrayList<Like> likes = new ArrayList<Like>();
         CustomResponse<ArrayList<Like>> result = CustomResponse.build();
-        likes = likeService.getLikeByUid(id);
+        likes = likeService.getLikeByUsername(username);
         if(likes == null){
             result.withError(CustomResponseStatus.NOT_FOUND.getCode(), CustomResponseStatus.NOT_FOUND.getMessage());
             return result;
