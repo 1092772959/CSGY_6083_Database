@@ -5,12 +5,10 @@ import com.backend.qa.common.CustomResponse;
 import com.backend.qa.common.CustomResponseStatus;
 import com.backend.qa.config.AccessLimit;
 import com.backend.qa.domain.Questions;
-import com.backend.qa.domain.User;
 import com.backend.qa.service.QuestionsService;
 import com.backend.qa.service.SessionManager;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import io.swagger.models.auth.In;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

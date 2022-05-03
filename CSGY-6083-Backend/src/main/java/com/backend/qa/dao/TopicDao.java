@@ -9,9 +9,9 @@ import java.util.ArrayList;
 
 @Mapper
 public interface TopicDao {
-    @Select("select * from Topic where topic_id = #{id}")
+    @Select("select * from topic where topic_id = #{id}")
     Topic getById(@Param("id") int id);
 
-    @Select({"select * from Topic"})
+    @Select({"select * from topic"})
     ArrayList<Topic> getAllTopics();
 }

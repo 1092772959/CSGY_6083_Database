@@ -42,7 +42,7 @@ public class QuestionsService {
 
             Long parentId = (Long)item.get("p_topic_id");
             Topic parentTopic = topicDao.getById(parentId.intValue());
-            topicNames.add(parentTopic.getTopic_name());
+            topicNames.add(parentTopic == null? "null" : parentTopic.getTopic_name());
 
             item.put("tags", topicNames);
         }
