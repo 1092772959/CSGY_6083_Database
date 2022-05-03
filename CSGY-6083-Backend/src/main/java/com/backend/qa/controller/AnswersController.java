@@ -11,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 @Api(tags = "Answers")
 @RestController
@@ -64,4 +66,17 @@ public class AnswersController {
         return result;
     }
 
+    @ApiOperation("Get Answer By Question and User")
+    @GetMapping(value = "/answers/question")
+    @ResponseBody
+    public CustomResponse<List<Map<Object, Object>>> getAnswerById(Integer ques_id, Integer uid){
+        CustomResponse<List<Map<Object, Object>>> result = CustomResponse.build();
+        List<Map<Object, Object>> answers = answersService.getAnswersByQuestionAndUser(ques_id, uid);
+        if(answers == null){
+            result.withError(CustomResponseStatus.NOT_FOUND.getCode(), CustomResponseStatus.NOT_FOUND.getMessage());
+            return result;
+        }
+        result.setData(answers);
+        return result;
+    }
 }

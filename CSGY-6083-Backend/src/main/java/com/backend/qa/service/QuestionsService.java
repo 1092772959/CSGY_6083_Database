@@ -32,6 +32,23 @@ public class QuestionsService {
         return questionsDao.getAllQuestionsByUsername(username);
     }
 
+    public Map<Object, Object> getQuestionKVById(Integer id) {
+        Map<Object, Object> res = questionsDao.getQuestionKVById(id);
+        if (res == null) {
+            return null;
+        }
+        List<String> topicNames = new ArrayList<>();
+        Integer topicId = (Integer)res.get("topic_id");
+        Topic topic = topicDao.getById(topicId);
+        topicNames.add(topic.getTopic_name());
+
+        Long parentId = (Long)res.get("p_topic_id");
+        Topic parentTopic = topicDao.getById(parentId.intValue());
+        topicNames.add(parentTopic.getTopic_name());
+        res.put("tags", topicNames);
+        return res;
+    }
+
     public ArrayList<Map<Object, Object>> getAllQuestionsByUId(Integer uid) {
         ArrayList<Map<Object, Object>> res = questionsDao.getAllQuestionsByUserId(uid);
         for (Map item : res) {

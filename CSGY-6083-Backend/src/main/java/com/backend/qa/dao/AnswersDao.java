@@ -5,6 +5,7 @@ import org.apache.ibatis.annotations.*;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Map;
 
 @Mapper
 public interface AnswersDao {
@@ -19,6 +20,18 @@ public interface AnswersDao {
 
     @Select("select * from Answers where ques_id = #{id} order by thumb_ups desc, date desc")
     ArrayList<Answers> getAllAnswersByQuesId(@Param("id") int id);
+
+    @Select("select distinct a.ans_id, u.uid, u.username, ques_id, date, ans_body, thumb_ups, isBest,\n" +
+            "                IFNULL(tmp.userCount, 0) as likedByUser\n" +
+            "from Answers a\n" +
+            "left join (select ans_id, COUNT(*) as userCount\n" +
+            "       from `Like`\n" +
+            "where uid = #{uid}\n" +
+            "group by ans_id) tmp on tmp.ans_id = a.ans_id\n" +
+            "join User u on u.uid = a.uid\n" +
+            "where a.ques_id = #{id}\n" +
+            "order by thumb_ups desc, date desc;")
+    ArrayList<Map<Object, Object>> getAllAnswersByQuesIdAndUid(@Param("id") int ques_id, @Param("uid") int uid);
 
     @Insert("insert into Answers (uid, ques_id, date, ans_body) values(#{uid},#{ques_id},#{date},#{ans_body})")
     int insert(@Param("uid") int uid, @Param("ques_id") int ques_id, @Param("date") Date date, @Param("ans_body") String ans_body);

@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 @Service
 public class AnswersService {
@@ -22,5 +23,9 @@ public class AnswersService {
 
     public ArrayList<Answers> getAnswersByUsername(String username) {
         return answersDao.getAnswersByUsername(username);
+    }
+
+    public ArrayList<Map<Object, Object>> getAnswersByQuestionAndUser(Integer ques_id, Integer uid) {
+        return answersDao.getAllAnswersByQuesIdAndUid(ques_id, uid);
     }
 }

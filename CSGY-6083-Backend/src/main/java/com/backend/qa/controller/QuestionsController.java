@@ -62,9 +62,9 @@ public class QuestionsController {
     @ApiOperation("Get Question By Id")
     @GetMapping(value = "/questions/{id}")
     @ResponseBody
-    public CustomResponse<Questions> getQuestionsById(@PathVariable("id") int id){
-        CustomResponse<Questions> result = CustomResponse.build();
-        Questions question = questionsService.getQuestionById(id);
+    public CustomResponse<Map<Object, Object>> getQuestionsById(@PathVariable("id") int id){
+        CustomResponse<Map<Object, Object>> result = CustomResponse.build();
+        Map<Object, Object> question = questionsService.getQuestionKVById(id);
         if(question == null){
             result.withError(CustomResponseStatus.NOT_FOUND.getCode(), CustomResponseStatus.NOT_FOUND.getMessage());
             return result;

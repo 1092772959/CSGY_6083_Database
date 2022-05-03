@@ -30,6 +30,12 @@ public interface QuestionsDao {
     @Select("select * from Questions inner join User on User.uid = Questions.uid and username = #{username} order by date desc")
     ArrayList<Questions> getAllQuestionsByUsername(@Param("username") String username);
 
+    @Select("select distinct q.ques_id, u.username, q.topic_id, q.date, q.title, q.ques_body, q.isSolved, (case when t.parent_id is null THEN -1 ELSE t.parent_id END) as p_topic_id \n" +
+            "from Questions q join User u on u.uid = q.uid join topic t on t.topic_id = q.topic_id \n" +
+            "where q.ques_id = #{id} \n" +
+            "order by date desc")
+    Map<Object, Object> getQuestionKVById(@Param("id") Integer id);
+
     @Select("select distinct q.ques_id, u.uid, u.username, q.topic_id, q.date, q.title, q.ques_body, q.isSolved, (case when t.parent_id is null THEN -1 ELSE t.parent_id END) as p_topic_id " +
             "from Questions q inner join User u on u.uid = q.uid and u.uid = #{uid} join topic t on t.topic_id = q.topic_id " +
             "order by date desc")
