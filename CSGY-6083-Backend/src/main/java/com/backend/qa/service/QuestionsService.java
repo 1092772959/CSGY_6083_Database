@@ -49,4 +49,7 @@ public class QuestionsService {
         return res;
     }
 
+    public void setQuestionSolvedById(Integer id, Boolean solved) {
+        questionsDao.updateSolved(id, solved);
+    }
 }

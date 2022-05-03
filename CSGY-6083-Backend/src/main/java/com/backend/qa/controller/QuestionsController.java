@@ -73,4 +73,13 @@ public class QuestionsController {
         return result;
     }
 
+    @ApiOperation("Set Question to be solved or not by id")
+    @PostMapping(value = "/questions/solved")
+    @ResponseBody
+    public CustomResponse<Boolean> setQuestionSolvedById(Integer id, Boolean solved){
+        CustomResponse<Boolean> result = CustomResponse.build();
+        questionsService.setQuestionSolvedById(id, solved);
+        result.setData(true);
+        return result;
+    }
 }
