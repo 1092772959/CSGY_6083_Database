@@ -14,6 +14,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 @Api(tags = "Questions")
 @RestController
@@ -29,10 +31,10 @@ public class QuestionsController {
     @AccessLimit(needLogin = true)
     @GetMapping(value = "/questions/user")
     @ResponseBody
-    public CustomResponse<ArrayList<Questions>> getQuestionsByUsername(String username){
-        CustomResponse<ArrayList<Questions>> result = CustomResponse.build();
-        ArrayList<Questions> questions = new ArrayList<Questions>();
-        questions = questionsService.getAllQuestionsByUsername(username);
+    public CustomResponse<List<Map<Object, Object>>> getQuestionsByUsername(Integer uid){
+        CustomResponse<List<Map<Object, Object>>> result = CustomResponse.build();
+        List<Map<Object, Object>> questions = new ArrayList<Map<Object, Object>>();
+        questions = questionsService.getAllQuestionsByUId(uid);
         if(questions == null){
             result.withError(CustomResponseStatus.NOT_FOUND.getCode(), CustomResponseStatus.NOT_FOUND.getMessage());
             return result;
