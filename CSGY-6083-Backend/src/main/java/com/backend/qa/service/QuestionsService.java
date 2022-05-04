@@ -58,8 +58,13 @@ public class QuestionsService {
             topicNames.add(topic.getTopic_name());
 
             Long parentId = (Long)item.get("p_topic_id");
-            Topic parentTopic = topicDao.getById(parentId.intValue());
-            topicNames.add(parentTopic == null? "null" : parentTopic.getTopic_name());
+            if (parentId != -1) {
+                Topic parentTopic = topicDao.getById(parentId.intValue());
+                topicNames.add(parentTopic.getTopic_name());
+            } else {
+                item.put("topic_id", -1);
+                item.put("p_topic_id", topicId);
+            }
 
             item.put("tags", topicNames);
         }
