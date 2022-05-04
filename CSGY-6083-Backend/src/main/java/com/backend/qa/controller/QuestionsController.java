@@ -5,7 +5,6 @@ import com.backend.qa.common.CustomResponse;
 import com.backend.qa.common.CustomResponseStatus;
 import com.backend.qa.config.AccessLimit;
 import com.backend.qa.domain.Questions;
-import com.backend.qa.domain.User;
 import com.backend.qa.service.QuestionsService;
 import com.backend.qa.service.SessionManager;
 import io.swagger.annotations.Api;
@@ -79,6 +78,20 @@ public class QuestionsController {
     public CustomResponse<Boolean> setQuestionSolvedById(Integer id, Boolean solved){
         CustomResponse<Boolean> result = CustomResponse.build();
         questionsService.setQuestionSolvedById(id, solved);
+        result.setData(true);
+        return result;
+    }
+
+    @ApiOperation("Post a new Question with title and body")
+    @PostMapping(value = "/questions/user")
+    @ResponseBody
+    public CustomResponse<Boolean> postAQuestion(Integer uid, @RequestParam("topic_id") Integer topic_id, @RequestParam("title") String title,
+                                                 @RequestParam("body") String body){
+        CustomResponse<Boolean> result = CustomResponse.build();
+        if(!questionsService.postAQuestion(uid, topic_id, title, body)){
+            result.withError(CustomResponseStatus.ERROR.getCode(), CustomResponseStatus.ERROR.getMessage());
+            return result;
+        }
         result.setData(true);
         return result;
     }

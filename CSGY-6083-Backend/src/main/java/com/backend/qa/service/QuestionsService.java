@@ -7,8 +7,8 @@ import com.backend.qa.domain.Topic;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -59,7 +59,7 @@ public class QuestionsService {
 
             Long parentId = (Long)item.get("p_topic_id");
             Topic parentTopic = topicDao.getById(parentId.intValue());
-            topicNames.add(parentTopic.getTopic_name());
+            topicNames.add(parentTopic == null? "null" : parentTopic.getTopic_name());
 
             item.put("tags", topicNames);
         }
@@ -68,5 +68,9 @@ public class QuestionsService {
 
     public void setQuestionSolvedById(Integer id, Boolean solved) {
         questionsDao.updateSolved(id, solved);
+    }
+
+    public boolean postAQuestion(Integer uid, Integer topic_id, String title, String body) {
+        return questionsDao.insert(uid, topic_id, new Date(), title, body) == 1;
     }
 }
