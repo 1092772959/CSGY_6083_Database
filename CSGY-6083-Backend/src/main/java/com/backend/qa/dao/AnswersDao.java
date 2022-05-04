@@ -42,4 +42,10 @@ public interface AnswersDao {
     @Update("update Answers set isBest = #{isBest} where ans_id = #{id}")
     int updateBest(@Param("id") int id, @Param("isBest") boolean isBest);
 
+    @Update("update Answers set thumb_ups = thumb_ups + 1 where ans_id = #{id}")
+    int incrementThumb(@Param("id") int id);
+
+    @Update("update Answers set thumb_ups = thumb_ups - 1 where ans_id = #{id}")
+    int decrementThumb(@Param("id") int id);
+
 }
