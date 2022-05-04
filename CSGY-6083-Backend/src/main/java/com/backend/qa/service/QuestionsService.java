@@ -40,11 +40,15 @@ public class QuestionsService {
         List<String> topicNames = new ArrayList<>();
         Integer topicId = (Integer)res.get("topic_id");
         Topic topic = topicDao.getById(topicId);
-        topicNames.add(topic.getTopic_name());
+        if(topic != null) {
+            topicNames.add(topic.getTopic_name());
+        }
 
         Long parentId = (Long)res.get("p_topic_id");
         Topic parentTopic = topicDao.getById(parentId.intValue());
-        topicNames.add(parentTopic.getTopic_name());
+        if(parentTopic != null) {
+            topicNames.add(parentTopic.getTopic_name());
+        }
         res.put("tags", topicNames);
         return res;
     }
