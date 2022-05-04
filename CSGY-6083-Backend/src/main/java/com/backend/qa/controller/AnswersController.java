@@ -79,4 +79,17 @@ public class AnswersController {
         result.setData(answers);
         return result;
     }
+
+    @ApiOperation("Post a New Answer with Body")
+    @PostMapping(value = "/answers")
+    @ResponseBody
+    public CustomResponse<Boolean> postAnAnswer(Integer ques_id, Integer uid, @RequestParam("body") String body){
+        CustomResponse<Boolean> result = CustomResponse.build();
+        if(!answersService.postAnAnswer(ques_id, uid, body)){
+            result.withError(CustomResponseStatus.FAILD.getCode(), CustomResponseStatus.FAILD.getMessage());
+            return result;
+        }
+        result.setData(true);
+        return result;
+    }
 }

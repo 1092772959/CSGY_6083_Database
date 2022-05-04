@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Map;
 
 @Service
@@ -27,5 +28,9 @@ public class AnswersService {
 
     public ArrayList<Map<Object, Object>> getAnswersByQuestionAndUser(Integer ques_id, Integer uid) {
         return answersDao.getAllAnswersByQuesIdAndUid(ques_id, uid);
+    }
+
+    public boolean postAnAnswer(Integer ques_id, Integer uid, String body) {
+        return answersDao.insert(uid, ques_id, new Date(), body) == 1;
     }
 }
