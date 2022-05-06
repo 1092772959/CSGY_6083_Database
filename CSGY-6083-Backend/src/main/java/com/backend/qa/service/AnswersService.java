@@ -26,6 +26,10 @@ public class AnswersService {
         return answersDao.getAnswersByUsername(username);
     }
 
+    public ArrayList<Map<Object, Object>> getAnswersByUser(Integer uid) {
+        return answersDao.getAnswersByUser(uid);
+    }
+
     public ArrayList<Map<Object, Object>> getAnswersByQuestionAndUser(Integer ques_id, Integer uid) {
         return answersDao.getAllAnswersByQuesIdAndUid(ques_id, uid);
     }

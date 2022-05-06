@@ -21,6 +21,22 @@ public interface AnswersDao {
     @Select("select * from Answers where ques_id = #{id} order by thumb_ups desc, date desc")
     ArrayList<Answers> getAllAnswersByQuesId(@Param("id") int id);
 
+    @Select("select distinct a.ans_id, a.uid, u.username, a.ans_body, q.ques_id, q.title,\n" +
+            "                a.thumb_ups, a.isBest, a.date\n" +
+            "    , IFNULL(tmp.likeCount, 0) as likedByUser\n" +
+            "from Answers a\n" +
+            "join Questions q on a.ques_id = q.ques_id\n" +
+            "join User u on a.uid = u.uid\n" +
+            "left join (\n" +
+            "    select ans_id, COUNT(*) as likeCount\n" +
+            "    from `Like`\n" +
+            "    where uid = #{uid} \n" +
+            "    group by ans_id\n" +
+            ") tmp on tmp.ans_id = a.ans_id\n" +
+            "where a.uid = #{uid} \n" +
+            "order by a.date desc;")
+    ArrayList<Map<Object, Object>> getAnswersByUser(@Param("uid") int uid);
+
     @Select("select distinct a.ans_id, u.uid, u.username, ques_id, date, ans_body, thumb_ups, isBest,\n" +
             "                IFNULL(tmp.userCount, 0) as likedByUser\n" +
             "from Answers a\n" +

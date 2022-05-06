@@ -25,10 +25,10 @@ public class AnswersController {
     @AccessLimit(needLogin = true)
     @GetMapping(value = "/answers/user")
     @ResponseBody
-    public CustomResponse<ArrayList<Answers>> getAnswersByUsername(String username){
-        ArrayList<Answers> answers = new ArrayList<Answers>();
-        CustomResponse<ArrayList<Answers>> result = CustomResponse.build();
-        answers = answersService.getAnswersByUsername(username);
+    public CustomResponse<ArrayList<Map<Object, Object>>> getAnswersByUsername(Integer uid) {
+        ArrayList<Map<Object, Object>> answers = new ArrayList<>();
+        CustomResponse<ArrayList<Map<Object, Object>>> result = CustomResponse.build();
+        answers = answersService.getAnswersByUser(uid);
         if(answers == null){
             result.withError(CustomResponseStatus.NOT_FOUND.getCode(), CustomResponseStatus.NOT_FOUND.getMessage());
             return result;
