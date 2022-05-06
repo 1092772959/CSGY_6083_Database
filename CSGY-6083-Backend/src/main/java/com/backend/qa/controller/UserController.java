@@ -90,5 +90,25 @@ public class UserController {
         result.setData(true);
         return result;
     }
+
+    @ApiOperation("Profile")
+    @PostMapping(value = "/profile")
+    @ResponseBody
+    public CustomResponse<Boolean> profile(@RequestParam("uid") String uid,
+                                           @RequestParam("username") String username,
+                                           @RequestParam("password") String password,
+                                           @RequestParam("email") String email,
+                                           @RequestParam("profile") String profile,
+                                           @RequestParam("state") String state,
+                                           @RequestParam("country") String country,
+                                           @RequestParam("city") String city){
+        CustomResponse<Boolean> result = CustomResponse.build();
+        if(!userService.profile(uid, username, password, email, profile, state, country, city)){
+            result.withError(CustomResponseStatus.SESSION_ERROR.getCode(), CustomResponseStatus.SESSION_ERROR.getMessage());
+            return result;
+        }
+        result.setData(true);
+        return result;
+    }
 }
 

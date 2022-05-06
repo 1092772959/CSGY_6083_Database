@@ -99,4 +99,8 @@ public class UserService {
         sessionManager.delete(cookieToken != null ? cookieToken:paramToken);
         return true;
     }
+
+    public boolean profile(String uid, String username, String password, String email, String profile, String state, String country, String city) {
+        return userDao.profile(uid, username, Md5.inputPass2DBPass(password), email, profile, state, country, city);
+    }
 }

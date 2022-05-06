@@ -1,10 +1,7 @@
 package com.backend.qa.dao;
 
 import com.backend.qa.domain.User;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 
 import java.util.ArrayList;
 
@@ -21,4 +18,14 @@ public interface UserDao {
 
     @Insert("insert into User (username,password, email) values(#{username},#{password},#{email})")
     int insert(@Param("username") String username, @Param("password") String password, @Param("email") String email);
+
+    @Update("update User set username=#{username}, password=#{password}, email=#{email}, profile=#{profile}, state=#{state}, country=#{country}, city=#{city} where uid=#{uid}")
+    boolean profile(@Param("uid") String uid,
+                    @Param("username")  String username,
+                    @Param("password") String password,
+                    @Param("email") String email,
+                    @Param("profile") String profile,
+                    @Param("state") String state,
+                    @Param("country") String country,
+                    @Param("city") String city);
 }
