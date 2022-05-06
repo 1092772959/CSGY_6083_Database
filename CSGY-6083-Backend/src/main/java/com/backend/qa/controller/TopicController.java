@@ -20,7 +20,7 @@ public class TopicController {
     @ApiOperation("Get All Topics")
     @GetMapping(value = "/topics")
     @ResponseBody
-    public CustomResponse<ArrayList<Topic>> getTopicById(){
+    public CustomResponse<ArrayList<Topic>> getTopics() {
         ArrayList<Topic> topics = new ArrayList<Topic>();
         CustomResponse<ArrayList<Topic>> result = CustomResponse.build();
         topics = topicService.getAllTopics();

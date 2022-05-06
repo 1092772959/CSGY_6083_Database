@@ -46,4 +46,12 @@ public interface QuestionsDao {
             "left join (select a.ques_id, 1 as hasBest from Answers a where a.isBest = 1) tmp on tmp.ques_id = q.ques_id \n" +
             "order by date desc")
     ArrayList<Map<Object, Object>> getAllQuestionsByUserId(@Param("uid") Integer uid);
+
+    @Select("select distinct q.ques_id, u.uid, u.username, q.topic_id, q.date, q.title, q.ques_body, q.isSolved, \n " +
+            "(case when tmp.hasBest is null THEN 0 ELSE tmp.hasBest END) as hasBest, \n" +
+            "(case when t.parent_id is null THEN -1 ELSE t.parent_id END) as p_topic_id \n" +
+            "from Questions q join User u on u.uid = q.uid join topic t on t.topic_id = q.topic_id \n" +
+            "left join (select ques_id, 1 as hasBest from Answers where isBest = 1) tmp on tmp.ques_id = q.ques_id \n" +
+            "order by date desc")
+    ArrayList<Map<Object, Object>> getAllQuestionsKV();
 }

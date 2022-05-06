@@ -12,6 +12,8 @@ public interface TopicDao {
     @Select("select * from topic where topic_id = #{id}")
     Topic getById(@Param("id") int id);
 
-    @Select({"select * from topic"})
+    @Select({"select topic_id, topic_name, \n" +
+            "IFNULL(parent_id, -1) as parent_id \n" +
+            "from topic"})
     ArrayList<Topic> getAllTopics();
 }

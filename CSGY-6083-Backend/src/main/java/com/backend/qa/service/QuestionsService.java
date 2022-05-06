@@ -28,6 +28,15 @@ public class QuestionsService {
         return questionsDao.getAllQuestions();
     }
 
+    public ArrayList<Map<Object, Object>> getQuestionsKV() {
+        ArrayList<Map<Object, Object>> res = questionsDao.getAllQuestionsKV();
+        // add tags and preprocess topic_id & p_topic_id
+        res.forEach(item -> {
+            processTagAndTopic(item);
+        });
+        return res;
+    }
+
     public ArrayList<Questions> getAllQuestionsByUsername(String username) {
         return questionsDao.getAllQuestionsByUsername(username);
     }
@@ -81,5 +90,23 @@ public class QuestionsService {
 
     public boolean postAQuestion(Integer uid, Integer topic_id, String title, String body) {
         return questionsDao.insert(uid, topic_id, new Date(), title, body) == 1;
+    }
+
+    private void processTagAndTopic(Map<Object, Object> tuple) {
+        List<String> topicNames = new ArrayList<>();
+        Integer topicId = (Integer)tuple.get("topic_id");
+        Topic topic = topicDao.getById(topicId);
+        topicNames.add(topic.getTopic_name());
+
+        Long parentId = (Long)tuple.get("p_topic_id");
+        if (parentId != -1) {
+            Topic parentTopic = topicDao.getById(parentId.intValue());
+            topicNames.add(parentTopic.getTopic_name());
+        } else {
+            tuple.put("topic_id", -1);
+            tuple.put("p_topic_id", topicId);
+        }
+
+        tuple.put("tags", topicNames);
     }
 }

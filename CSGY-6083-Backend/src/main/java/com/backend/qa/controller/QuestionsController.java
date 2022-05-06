@@ -57,6 +57,21 @@ public class QuestionsController {
         return result;
     }
 
+    @ApiOperation("Get All questions with details")
+    @GetMapping(value = "/questions/explore")
+    @ResponseBody
+    public CustomResponse<ArrayList<Map<Object, Object>>> getAllQuestionsKV() {
+        CustomResponse<ArrayList<Map<Object, Object>>> result = CustomResponse.build();
+        ArrayList<Map<Object, Object>> questions = new ArrayList<>();
+        questions = questionsService.getQuestionsKV();
+        if(questions == null){
+            result.withError(CustomResponseStatus.NOT_FOUND.getCode(), CustomResponseStatus.NOT_FOUND.getMessage());
+            return result;
+        }
+        result.setData(questions);
+        return result;
+    }
+
 
     @ApiOperation("Get Question By Id")
     @GetMapping(value = "/questions/{id}")
