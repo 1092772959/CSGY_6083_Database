@@ -80,6 +80,20 @@ public class AnswersController {
         return result;
     }
 
+    @ApiOperation("Get Answer By Question and User")
+    @GetMapping(value = "/answers/like")
+    @ResponseBody
+    public CustomResponse<List<Map<Object, Object>>> getAnswerLikedByUser(Integer uid){
+        CustomResponse<List<Map<Object, Object>>> result = CustomResponse.build();
+        List<Map<Object, Object>> answers = answersService.getAnswersLikedByUser(uid);
+        if(answers == null){
+            result.withError(CustomResponseStatus.NOT_FOUND.getCode(), CustomResponseStatus.NOT_FOUND.getMessage());
+            return result;
+        }
+        result.setData(answers);
+        return result;
+    }
+
     @ApiOperation("Post a New Answer with Body")
     @PostMapping(value = "/answers")
     @ResponseBody

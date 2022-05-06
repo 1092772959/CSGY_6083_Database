@@ -49,6 +49,16 @@ public interface AnswersDao {
             "order by thumb_ups desc, date desc;")
     ArrayList<Map<Object, Object>> getAllAnswersByQuesIdAndUid(@Param("id") int ques_id, @Param("uid") int uid);
 
+    @Select("select distinct a.ans_id, u.uid, u.username, q.ques_id, q.title,\n" +
+            "                a.date, a.ans_body, a.thumb_ups, a.isBest, 1 as likedByUser\n" +
+            "from Answers a\n" +
+            "join Questions q on a.ques_id = q.ques_id\n" +
+            "join User u on a.uid = u.uid\n" +
+            "join `Like` l on l.ans_id = a.ans_id\n" +
+            "where l.uid = #{uid} \n" +
+            "order by a.date desc;")
+    ArrayList<Map<Object, Object>> getAnswersLikedByUser(@Param("uid") int uid);
+
     @Insert("insert into Answers (uid, ques_id, date, ans_body) values(#{uid},#{ques_id},#{date},#{ans_body})")
     int insert(@Param("uid") int uid, @Param("ques_id") int ques_id, @Param("date") Date date, @Param("ans_body") String ans_body);
 
