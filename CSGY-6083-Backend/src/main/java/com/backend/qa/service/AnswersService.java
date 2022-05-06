@@ -33,4 +33,21 @@ public class AnswersService {
     public boolean postAnAnswer(Integer ques_id, Integer uid, String body) {
         return answersDao.insert(uid, ques_id, new Date(), body) == 1;
     }
+
+    public boolean updateIsBest(Integer ans_id, Boolean isBest) {
+        final Answers ans = answersDao.getAnswerById(ans_id);
+        if (ans.getIsBest() == isBest) { // should be different from the record in the database
+            return false;
+        }
+
+
+        int hasBest = answersDao.getHasBest(ans.getQues_id());
+        if ((hasBest > 0 && isBest) || (hasBest == 0 && !isBest)) {
+            System.out.println(hasBest);
+            System.out.println(isBest);
+            return false;
+        }
+        answersDao.updateIsBest(ans_id, isBest);
+        return true;
+    }
 }

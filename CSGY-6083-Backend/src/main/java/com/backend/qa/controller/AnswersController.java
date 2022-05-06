@@ -92,4 +92,17 @@ public class AnswersController {
         result.setData(true);
         return result;
     }
+
+    @ApiOperation("Post a New Answer with Body")
+    @PostMapping(value = "/answers/best")
+    @ResponseBody
+    public CustomResponse<Boolean> updateIsBest(Integer ans_id, Boolean is_best) {
+        CustomResponse<Boolean> result = CustomResponse.build();
+        if(!answersService.updateIsBest(ans_id, is_best)){
+            result.withError(CustomResponseStatus.FAILD.getCode(), CustomResponseStatus.FAILD.getMessage());
+            return result;
+        }
+        result.setData(true);
+        return result;
+    }
 }

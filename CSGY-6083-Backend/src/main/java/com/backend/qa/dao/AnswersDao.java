@@ -48,4 +48,9 @@ public interface AnswersDao {
     @Update("update Answers set thumb_ups = thumb_ups - 1 where ans_id = #{id}")
     int decrementThumb(@Param("id") int id);
 
+    @Select("select count(*) from Answers where ques_id = #{qid} and isBest = 1")
+    int getHasBest(@Param("qid") int ques_id);
+
+    @Update("update Answers set isBest = #{isBest} where ans_id = #{aid}")
+    int updateIsBest(@Param("aid") int ans_id, @Param("isBest") boolean isBest);
 }

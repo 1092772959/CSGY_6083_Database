@@ -30,14 +30,20 @@ public interface QuestionsDao {
     @Select("select * from Questions inner join User on User.uid = Questions.uid and username = #{username} order by date desc")
     ArrayList<Questions> getAllQuestionsByUsername(@Param("username") String username);
 
-    @Select("select distinct q.ques_id, u.username, q.topic_id, q.date, q.title, q.ques_body, q.isSolved, (case when t.parent_id is null THEN -1 ELSE t.parent_id END) as p_topic_id \n" +
+    @Select("select distinct q.ques_id, u.uid, u.username, q.topic_id, q.date, q.title, q.ques_body, q.isSolved, \n " +
+            "(case when tmp.hasBest is null THEN 0 ELSE tmp.hasBest END) as hasBest, \n" +
+            "(case when t.parent_id is null THEN -1 ELSE t.parent_id END) as p_topic_id \n" +
             "from Questions q join User u on u.uid = q.uid join topic t on t.topic_id = q.topic_id \n" +
+            "left join (select a.ques_id, 1 as hasBest from Answers a where a.ques_id = #{id} and a.isBest = 1) tmp on tmp.ques_id = q.ques_id \n" +
             "where q.ques_id = #{id} \n" +
             "order by date desc")
     Map<Object, Object> getQuestionKVById(@Param("id") Integer id);
 
-    @Select("select distinct q.ques_id, u.uid, u.username, q.topic_id, q.date, q.title, q.ques_body, q.isSolved, (case when t.parent_id is null THEN -1 ELSE t.parent_id END) as p_topic_id " +
-            "from Questions q inner join User u on u.uid = q.uid and u.uid = #{uid} join topic t on t.topic_id = q.topic_id " +
+    @Select("select distinct q.ques_id, u.uid, u.username, q.topic_id, q.date, q.title, q.ques_body, q.isSolved, \n" +
+            "(case when tmp.hasBest is null THEN 0 ELSE tmp.hasBest END) as hasBest, \n" +
+            "(case when t.parent_id is null THEN -1 ELSE t.parent_id END) as p_topic_id \n" +
+            "from Questions q inner join User u on u.uid = q.uid and u.uid = #{uid} join topic t on t.topic_id = q.topic_id \n" +
+            "left join (select a.ques_id, 1 as hasBest from Answers a where a.isBest = 1) tmp on tmp.ques_id = q.ques_id \n" +
             "order by date desc")
     ArrayList<Map<Object, Object>> getAllQuestionsByUserId(@Param("uid") Integer uid);
 }
