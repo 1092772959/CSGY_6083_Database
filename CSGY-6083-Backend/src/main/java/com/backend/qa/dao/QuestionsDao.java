@@ -5,6 +5,7 @@ import org.apache.ibatis.annotations.*;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 @Mapper
@@ -54,4 +55,28 @@ public interface QuestionsDao {
             "left join (select ques_id, 1 as hasBest from Answers where isBest = 1) tmp on tmp.ques_id = q.ques_id \n" +
             "order by date desc")
     ArrayList<Map<Object, Object>> getAllQuestionsKV();
+
+    @Select("select q.ques_id, q.title, sum(score) as score_sum\n" +
+            "from (\n" +
+            "    select ques_id, 5.0 * MATCH(title)\n" +
+            "                AGAINST (#{keyword} IN BOOLEAN MODE) as score\n" +
+            "    from Questions\n" +
+            "    where topic_id = 4\n" +
+            " union all\n" +
+            "    select ques_id, 3.0 * MATCH(ques_body)\n" +
+            "                AGAINST (#{keyword} IN BOOLEAN MODE) as score\n" +
+            "    from Questions\n" +
+            "    where topic_id = 4\n" +
+            " union all\n" +
+            "    select a.ques_id, 1.0 * SUM(MATCH(ans_body)\n" +
+            "                AGAINST (#{keyword}  IN BOOLEAN MODE)) as score\n" +
+            "    from Answers a \n" +
+            "    join Questions Q on a.ques_id = Q.ques_id\n" +
+            "    where Q.topic_id = 4\n" +
+            "    group by a.ques_id\n" +
+            ") tmp\n" +
+            "join Questions q on q.ques_id = tmp.ques_id\n" +
+            "group by tmp.ques_id\n" +
+            "order by score_sum desc;")
+    List<Object> searchQuesByKeyword(@Param("keyword") String keyword);
 }

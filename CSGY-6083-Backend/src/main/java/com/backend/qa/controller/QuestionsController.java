@@ -110,4 +110,19 @@ public class QuestionsController {
         result.setData(true);
         return result;
     }
+
+    @ApiOperation("Search a new Question with Keyword")
+    @GetMapping(value = "/questions/search/{keyword}")
+    @ResponseBody
+    public CustomResponse<List<Map<Object, Object>>> searchQuesByKeyword(@PathVariable("keyword") String keyword){
+        CustomResponse<List<Map<Object, Object>>> result = CustomResponse.build();
+        List<Map<Object, Object>> questions = new ArrayList<>();
+        questions = questionsService.searchQuesByKeyword(keyword);
+        if(questions == null){
+            result.withError(CustomResponseStatus.ERROR.getCode(), CustomResponseStatus.ERROR.getMessage());
+            return result;
+        }
+        result.setData(questions);
+        return result;
+    }
 }

@@ -94,11 +94,11 @@ public class QuestionsService {
 
     private void processTagAndTopic(Map<Object, Object> tuple) {
         List<String> topicNames = new ArrayList<>();
-        Integer topicId = (Integer)tuple.get("topic_id");
+        Integer topicId = (Integer) tuple.get("topic_id");
         Topic topic = topicDao.getById(topicId);
         topicNames.add(topic.getTopic_name());
 
-        Long parentId = (Long)tuple.get("p_topic_id");
+        Long parentId = (Long) tuple.get("p_topic_id");
         if (parentId != -1) {
             Topic parentTopic = topicDao.getById(parentId.intValue());
             topicNames.add(parentTopic.getTopic_name());
@@ -108,5 +108,14 @@ public class QuestionsService {
         }
 
         tuple.put("tags", topicNames);
+    }
+
+    public List<Map<Object, Object>> searchQuesByKeyword(String keyword) {
+        List<Object> ques = questionsDao.searchQuesByKeyword(keyword);
+        List<Map<Object, Object>> res = new ArrayList<>();
+        for(Object ques_id : ques){
+            res.add(getQuestionKVById((Integer) ques_id));
+        }
+        return res;
     }
 }
