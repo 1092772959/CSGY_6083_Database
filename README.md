@@ -359,6 +359,89 @@ Clarification: Question 2 gets the highest score because it contains both of the
 </figure>
 ## Implementation
 
+The enviroment setup can be found at:
+
+Backend: https://github.com/1092772959/CSGY_6083_Database/tree/main/CSGY-6083-Backend
+Frontend: https://github.com/1092772959/CSGY-6083-Frontend
+Database: https://github.com/1092772959/CSGY_6083_Database
+
+
+
+### Extra 
+
+Apart from the basic function and scenarios, We realized the features for getting extra credits.
+
+- Editing for the profile.
+- Selection/Unselection of a best answer by the author
+- Searching by keywords within one first-level topic or one second-level topic or two-level combined
+- Sort the question by relevance (giving weights: question title > question body > answer body)
+- SQL injection prevention and Hashing password stored.
+
+
+
+### Backend Design
+
+As for the backend of the web application, we implement our web service in Spring Boot, which is a popular Web framework in Java. It helps us focus more on business features and less on infrastructure. 
+
+Our architecture is based on MVC. In the backend, we focus on implementing Controller and Model. 
+
+#### Controller
+
+The Controller can help converts the payload of the request from web browser to the internal structure of the data. Then, it can sends the data to Model for further processing. After CRUD with Model, it will get processed data from the Model and advances that data to the frontend.
+
+We integrated Swagger2 in our project to display the API document and thus better communicating with frontend. The API can be found at 
+
+http://localhost:8080/swagger-ui/#/
+
+We designed RESTful style API. We can identify the manipulations of different resources from the URL.
+
+![](README.assets/api.png)
+
+![](README.assets/api2.png)
+
+![](README.assets/api3.png)
+
+
+
+#### Model
+
+The Model layer help us to map application calls to the persistence layer. 
+
+We first defined several Java Classes (in domain) according to the tables in the relational database. Each column in table is related to a data field in Class.
+
+Each record is related to the instance of the Class. 
+
+Then, In order to call appropriate SQL and stored procedures that we have defined in the database in the first part. We integrated MyBatis, it supports custom SQL and advaned mappings. By defining different mappers (in dao), we can implement the DAO pattern that provides an abstract interface to help us query and manipulate data from a database using an object-oriented paradigm. We can also parse the SQL results to the Objects in application.
+
+
+
+#### Security 
+
+##### Password store
+
+ Due to the insecurity of databases and the need to store the passwords. We utilized MD5 hash generator to encoding *passwords* before stored in the database. The same input has the same hash value. And passwords can stored in a secret manner.
+
+
+
+##### SQL injecetion 
+
+We use prepared statement and parameterized queries to prevent SQLi. Below is a code snippet.
+
+```sql
+@Select({"select * from User where username = #{username}"})
+User getByUsername(@Param("username") String username);
+```
+
+The variables passed in through parameterized queries will never execute as live SQL code. If we pass the username as "Bob; drop table User", the drop will never be executed. However, we will search by the username with "Bob; drop table User".
+
+
+
+#### Session
+
+We realized two ways of maintaining session after user login to the application. One way is to use Cookie after the backend get the right user inforrmation. The server will generate a random token and set a token in cookie, browser can then include it in every subsequent request. In this way, we can find the questions, answers, and likes of the current user. When user log out, the token will be deleted. Another way is use localStorage in browser to store the uid of current user.
+
+
+
 ### Frontend design
 
 In order to provide a good user experience for browsing as well as creating questions and answers, we decide to use React.js, which is a popular frontend framework, to build a web application. 
@@ -424,4 +507,6 @@ If the current user is the author of this question, then he could pick an answer
 ![image-20220507001634473](README.assets/image-20220507001634473.png)
 
 In this system, we have two tiers of topic hierachy. When browsing questions, users could select either only the first tier topic or two tiers of topics together to get the specific questions they want. Initially, both selectors are set to 'All' which denotes all of the questions. Once the user has selected the first tier topic, then the sub topics he could choose are determined. For example, in the screenshot, you can see once we choose `Computer Science` as the tier one topic, then the sub topics could only be those under Computer Science.
+
+
 
