@@ -462,6 +462,8 @@ Besides, we use Material-UI(MUI) as the UI library for better visual effect. Bas
 
 On this page, our users should input a username, en email address and their password in the textInput fields. Click the sign up button, the backend server will create a user record in the table. The username should be unique in the User table; otherwise the applications will show error message if the user picks an existed name.
 
+
+
 #### SignIn
 
 <img src="README.assets/image-20220506191215238.png" alt="image-20220506191215238" style="zoom:60%;" />
@@ -472,17 +474,23 @@ After signing up successfully, the web page will direct the user to the sign in 
 
 If the user provides correct username and password, the application will direct him to the home page.
 
+
+
 #### Logout
 
 ![image-20220507003830559](README.assets/image-20220507003830559.png)
 
 Once the user want to logout from the application, he can click this button. Then the user information stored on the web application will be cleared, and he will directed to the login page.
 
+
+
 #### SideBar
 
 ![image-20220506232947764](README.assets/image-20220506232947764.png)
 
 On the left side of the home page, users can see several items in the sidebar which could direct them to the specific pages. 
+
+
 
 #### Question
 
@@ -491,6 +499,8 @@ On the left side of the home page, users can see several items in the sidebar wh
 In home page, the user will first see all of the questions that written by the user himeself. 
 
 For each question, there will be a box displaying the title, author, time when the question was posted, tags of two-hierachy topics, solved or not. If the current user is the author of this question, there will be a button that could mark it as solved or not; otherwise this button is hidden. Once the user clicks on the title of the question, he will be directed to the page showing all the answers of this questions.
+
+
 
 #### Answer
 
@@ -502,6 +512,8 @@ If the current user is the author of this question, then he could pick an answer
 
 ![image-20220506232408633](README.assets/image-20220506232408633.png)
 
+
+
 #### Topic Selector
 
 ![image-20220507001634473](README.assets/image-20220507001634473.png)
@@ -510,3 +522,56 @@ In this system, we have two tiers of topic hierachy. When browsing questions, us
 
 
 
+#### Posting
+
+User can go to *My Questions* from the sidebars to post a new question.
+
+![image-20220507001634473](README.assets/ques.png)
+
+Click on the *Ask Question*.
+
+![image-20220507001634473](README.assets/ques2.png)
+
+User may specify a topic for the question. The title cannot be empty.
+
+Then it will direct to the My Questions page.
+
+![image-20220507001634473](README.assets/ques3.png)
+
+
+
+User can also go to Explore page and provide answers to questions posted by others.
+
+ ![image-20220507001634473](README.assets/ans.png)
+
+
+
+ ![image-20220507001634473](README.assets/ans2.png)
+
+
+
+
+
+#### Searching
+
+This applicatin support question search by keyword. It will display by relevance. 
+
+![image-20220507001634473](README.assets/search.png)
+
+
+
+Also, if we select a topic at the same time, it will search the keyword within that topic.
+
+![image-20220507001634473](README.assets/search2.png)
+
+
+
+#### Profile
+
+User can edit and display their profile once they are logged in. User cannot change to the same username with other users. 
+
+![](README.assets/profile.png)
+
+After update successfully, page will display the update information.
+
+![profile2](README.assets/profile2.png)
