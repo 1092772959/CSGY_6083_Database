@@ -357,3 +357,71 @@ Clarification: Question 2 gets the highest score because it contains both of the
 <figure>
   <figcaption align="center"><b>Answers Body</b></figcaption>
 </figure>
+## Implementation
+
+### Frontend design
+
+In order to provide a good user experience for browsing as well as creating questions and answers, we decide to use React.js, which is a popular frontend framework, to build a web application. 
+
+With this framework, we could design reusable and portable components which could be displayed in several pages. For example, we created Component Question and Answer that could be used in pages like My Questions, My Answers, Explore All Questions, etc. 
+
+Also, we can use status of each component and the hook React provides to bind the data between different components. Hook is a feature that enables updating the status of a component even it is called in another component. For exmple, after setting a topic selector component, I can pass the hook to it to update the list of questions showed in the page. So, everytime the user select a certain topic, the question list will also be updated by this hook.
+
+Besides, we use Material-UI(MUI) as the UI library for better visual effect. Basically, we can use the components of MUI to construct every thing in our web application in a timely manner. 
+
+
+
+### Component
+
+#### SignUp
+
+<img src="README.assets/image-20220506181249805.png" alt="image-20220506181249805" style="zoom:60%;" />
+
+On this page, our users should input a username, en email address and their password in the textInput fields. Click the sign up button, the backend server will create a user record in the table. The username should be unique in the User table; otherwise the applications will show error message if the user picks an existed name.
+
+#### SignIn
+
+<img src="README.assets/image-20220506191215238.png" alt="image-20220506191215238" style="zoom:60%;" />
+
+After signing up successfully, the web page will direct the user to the sign in page, on which the user is required to provide his username and password. If the username or the password is not matched according to the record in the database, the application will show alert as the screenshot below shows.
+
+<img src="README.assets/image-20220506193629283.png" alt="image-20220506193629283" style="zoom:80%;" />
+
+If the user provides correct username and password, the application will direct him to the home page.
+
+#### Logout
+
+![image-20220507003830559](README.assets/image-20220507003830559.png)
+
+Once the user want to logout from the application, he can click this button. Then the user information stored on the web application will be cleared, and he will directed to the login page.
+
+#### SideBar
+
+![image-20220506232947764](README.assets/image-20220506232947764.png)
+
+On the left side of the home page, users can see several items in the sidebar which could direct them to the specific pages. 
+
+#### Question
+
+![image-20220506215918583](README.assets/image-20220506215918583.png)
+
+In home page, the user will first see all of the questions that written by the user himeself. 
+
+For each question, there will be a box displaying the title, author, time when the question was posted, tags of two-hierachy topics, solved or not. If the current user is the author of this question, there will be a button that could mark it as solved or not; otherwise this button is hidden. Once the user clicks on the title of the question, he will be directed to the page showing all the answers of this questions.
+
+#### Answer
+
+![image-20220506230954387](README.assets/image-20220506230954387.png)
+
+As the screeshot shows, the answer component contains the author of this answer, the date is was posted, the content, and the number of likes it gets from other users. Our user could click on the white thumbup icon to give a like to this answer; also he could click on the black thumbup icon to unlike an answer he liked before. The number on the right side will be changed accordingly.
+
+If the current user is the author of this question, then he could pick an answer by clicking on the "Mark Best Answer" button, after that, the answer he picked would show a green icon denoting that it is the best answer. And the original Mark button would be changed to UNMARK. The user can click on it to remove the best answer tag whenever he wants. Once there is an answer was chosen as the best answer, the Mark button of those answers will disappear because we only want one answer to be the best.
+
+![image-20220506232408633](README.assets/image-20220506232408633.png)
+
+#### Topic Selector
+
+![image-20220507001634473](README.assets/image-20220507001634473.png)
+
+In this system, we have two tiers of topic hierachy. When browsing questions, users could select either only the first tier topic or two tiers of topics together to get the specific questions they want. Initially, both selectors are set to 'All' which denotes all of the questions. Once the user has selected the first tier topic, then the sub topics he could choose are determined. For example, in the screenshot, you can see once we choose `Computer Science` as the tier one topic, then the sub topics could only be those under Computer Science.
+
