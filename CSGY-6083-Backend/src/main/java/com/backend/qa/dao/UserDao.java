@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 @Mapper
 public interface UserDao {
-    @Select("select * from User where uid = #{uid}")
+    @Select("select uid, username, email, profile, city, state, country, level from User where uid = #{uid}")
     public User getByUid(@Param("uid") int uid);
 
     @Select({"select * from User"})

@@ -102,7 +102,7 @@ public class UserService {
 
     public boolean profile(String uid, String username, String password, String email, String profile, String state, String country, String city) {
         User oldUser = getByUsername(username);
-        if(oldUser != null){
+        if(oldUser != null && !oldUser.getUid().equals(Integer.parseInt(uid))){
             return false;
         }
         return userDao.profile(uid, username, Md5.inputPass2DBPass(password), email, profile, state, country, city);
